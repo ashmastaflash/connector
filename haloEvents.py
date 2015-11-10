@@ -909,13 +909,13 @@ def writeEventString(s):
                 print("S-Level: ", remote_syslog.LEVEL[syslogLevel], type(remote_syslog.LEVEL[syslogLevel]))
                 print(" STRING: ", s)
                 try:
-                    syslog.syslog(remote_syslog.LEVEL[syslogLevel], s)
+                    remote_syslog.syslog(remote_syslog.LEVEL[syslogLevel], s)
                 except:
                     t = s.encode('UTF-8')
                     print("Unicode not accepted by socket.")
                     print("Resubmitting as : " + t)
                     print("\n")
-                    syslog.syslog(remote_syslog.LEVEL[syslogLevel], t)
+                    remote_syslog.syslog(remote_syslog.LEVEL[syslogLevel], t)
 
 
 def encodeStringAsCEF(str):
