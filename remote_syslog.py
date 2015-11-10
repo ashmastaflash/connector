@@ -39,12 +39,19 @@ def openlog():
     global syslogSocket
     syslogSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-def syslog(message, level=LEVEL['notice'], facility=FACILITY['daemon'], host='localhost', port=514):
+def syslog(message, level=LEVEL['notice'], facility=FACILITY['daemon'], host='172.31.3.9', port=514):
     """
     Send syslog UDP packet to given host and port.
     """
     data = '<%d>%s' % (level + facility*8, message)
-    syslogSocket.sendto(data, (host, port))
-
+    try:
+        syslogSocket.sendto(data, (host, port))
+    except (AttributeError) as e:
+        print("Error message: ", e)
+        encode_data = data.encode('utf-8')
+        try:
+            syslogSocket(encode_data, (host, port))
+        except (AttributeError) as e:
+            print("Error message after encoding data: ", e)
 def closelog():
     syslogSocket.close()
