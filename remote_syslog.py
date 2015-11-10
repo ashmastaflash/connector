@@ -51,6 +51,7 @@ def syslog(message, level=LEVEL['notice'], facility=FACILITY['daemon'], host='17
         print("facility type: ", type(facility))
         print(facility)
         print("message type: ", type(message))
+        print(message)
     try:
         syslogSocket.sendto(data, (host, port))
     except (AttributeError) as e:
