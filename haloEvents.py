@@ -888,6 +888,17 @@ def writeEventString(s):
                 syslogLevel = syslogInfo[1]
             if not isWindows:
                 syslog.syslog(cpsyslog.LEVEL[syslogLevel], s)
+                print "\n\n"
+                print("S-Level: ", cpsyslog.LEVEL[syslogLevel], type(cpsyslog.LEVEL[syslogLevel]))
+                print(" STRING: ", s)
+                try:
+                    syslog.syslog(cpsyslog.LEVEL[syslogLevel], s)
+                except:
+                    t = s.encode('UTF-8')
+                    print("Unicode not accepted by socket.")
+                    print("Resubmitting as : " + t)
+                    print("\n")
+                    syslog.syslog(cpsyslog.LEVEL[syslogLevel], t)
             else:
                 syslogFacility = 'user'
                 if (syslogInfo):
@@ -1531,7 +1542,8 @@ def processEventBatchesByPages(apiCon,credential,timestampMap,credentialList,con
                                 time.sleep(0.1); # should we give up after some time limit?
                             sinceTime = batchSinceTime[batchIndex]
                     nextLink = changePageInURL(nextLink,effectivePageNum,sinceTime)
-        except (IOError, TypeError) as e:
+        except (IOError, TypeError, AttributeError) as e:
+            print e
             # should log exact error for debugging purposes
             if (retryCount < 3):
                 retryCount += 1
