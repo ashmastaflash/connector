@@ -1553,7 +1553,7 @@ def processEventBatchesByPages(apiCon,credential,timestampMap,credentialList,con
                                 time.sleep(0.1); # should we give up after some time limit?
                             sinceTime = batchSinceTime[batchIndex]
                     nextLink = changePageInURL(nextLink,effectivePageNum,sinceTime)
-        except (IOError, TypeError, AttributeError) as e:
+        except (IOError, AttributeError) as e:
             print e
             # should log exact error for debugging purposes
             if (retryCount < 3):
