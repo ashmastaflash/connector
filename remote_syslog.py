@@ -43,7 +43,14 @@ def syslog(message, level=LEVEL['notice'], facility=FACILITY['daemon'], host='17
     """
     Send syslog UDP packet to given host and port.
     """
-    data = '<%d>%s' % (level + facility*8, message)
+    try:
+        data = '<%d>%s' % (level + facility*8, message)
+    except:
+        print("level type: ", type(level))
+        print(level)
+        print("facility type: ", type(facility))
+        print(facility)
+        print("message type: ", type(message))
     try:
         syslogSocket.sendto(data, (host, port))
     except (AttributeError) as e:
