@@ -887,34 +887,34 @@ def writeEventString(s):
             if (syslogInfo):
                 syslogLevel = syslogInfo[1]
             if not isWindows:
-                syslog.syslog(cpsyslog.LEVEL[syslogLevel], s)
-                print "\n\n"
-                print("S-Level: ", cpsyslog.LEVEL[syslogLevel], type(cpsyslog.LEVEL[syslogLevel]))
-                print(" STRING: ", s)
+                #syslog.syslog(cpsyslog.LEVEL[syslogLevel], s)
+                #print "\n\n"
+                #print("S-Level: ", cpsyslog.LEVEL[syslogLevel], type(cpsyslog.LEVEL[syslogLevel]))
+                #print(" STRING: ", s)
                 try:
                     syslog.syslog(cpsyslog.LEVEL[syslogLevel], s)
                 except:
                     t = s.encode('UTF-8')
-                    print("Unicode not accepted by socket.")
-                    print("Resubmitting as : " + t)
-                    print("\n")
+                    #print("Unicode not accepted by socket.")
+                    #print("Resubmitting as : " + t)
+                    #print("\n")
                     syslog.syslog(cpsyslog.LEVEL[syslogLevel], t)
             else:
                 syslogFacility = 'user'
                 if (syslogInfo):
                     syslogFacility = syslogInfo[0]
                 #remote_syslog.syslog(s, remote_syslog.LEVEL[syslogLevel], remote_syslog.FACILITY[syslogFacility], outputDestination)
-                print "\n\n"
-                print("S-Level: ", remote_syslog.LEVEL[syslogLevel], type(remote_syslog.LEVEL[syslogLevel]))
-                print(" STRING: ", s)
+                #print "\n\n"
+                #print("S-Level: ", remote_syslog.LEVEL[syslogLevel], type(remote_syslog.LEVEL[syslogLevel]))
+                #print(" STRING: ", s)
                 try:
                     remote_syslog.syslog(s, remote_syslog.LEVEL[syslogLevel], remote_syslog.FACILITY[syslogFacility],
                                      outputDestination)
                 except:
                     t = s.encode('UTF-8')
-                    print("Unicode not accepted by socket.")
-                    print("Resubmitting as : " + t)
-                    print("\n")
+                    #print("Unicode not accepted by socket.")
+                    #print("Resubmitting as : " + t)
+                    #print("\n")
                     remote_syslog.syslog(t, remote_syslog.LEVEL[syslogLevel], remote_syslog.FACILITY[syslogFacility],
                                      outputDestination)
 
